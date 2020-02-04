@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer), typeof(SpritesheetAnimator))]
 public class MoveCharacter : MonoBehaviour
 {
     private const string ROLL = "roll";
@@ -10,7 +10,7 @@ public class MoveCharacter : MonoBehaviour
     public float speed = 5f;
 
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
+    private SpritesheetAnimator animator;
 
     // COOLDOWNS
     [Tooltip("Cooldown of a roll in seconds")]
@@ -20,9 +20,9 @@ public class MoveCharacter : MonoBehaviour
     void Start()
     {
         this.transform.position = new Vector3(2, 2, 0);
-        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Time.timeScale = 0.5f;
+        animator = GetComponent<SpritesheetAnimator>();
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -49,10 +49,20 @@ public class MoveCharacter : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space) && rollCooldown <= 0)
         {
-            animator.SetTrigger(ROLL);
+            animator.Play(Anims.Roll);
             rollCooldown = rollCooldownDuration;
         }
-        animator.SetFloat("speed", move.magnitude);
+        if (animator.CurrentAnimation != Anims.Roll || animator.LoopCount >= 1)
+        {
+            if (move.magnitude > 0)
+            {
+                animator.Play(Anims.Run);
+            }
+            else
+            {
+                animator.Play(Anims.Iddle);
+            }
+        }
 
         this.transform.position = this.transform.position + speed * Time.deltaTime * move.normalized;
         rollCooldown -= Time.deltaTime;

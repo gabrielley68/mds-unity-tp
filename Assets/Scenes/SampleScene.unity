@@ -624,8 +624,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1789404910}
   - component: {fileID: 1789404909}
-  - component: {fileID: 1789404908}
   - component: {fileID: 1789404911}
+  - component: {fileID: 1789404908}
   m_Layer: 0
   m_Name: girl-2_0
   m_TagString: Untagged
@@ -633,25 +633,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1789404908
-Animator:
-  serializedVersion: 3
+--- !u!114 &1789404908
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789404907}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9adf9f35477b7d94c8f7b708682d2678, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c45ace9547cdf458c579683f6195b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSpeed: 25
+  iddle:
+  - {fileID: -7534814588082588449, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -8908505173890310732, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: 2867139976888687431, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -5709086882050283234, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -1370921465101214804, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  run:
+  - {fileID: 4431311954750922753, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -1537421284121854877, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -926713556074230613, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -1684448031922152470, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: 357513123220955769, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: 5029711492617055924, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  roll:
+  - {fileID: -2989388456014745137, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -8602678959190746492, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -6638034360933449799, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -4500279932792534462, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
+  - {fileID: -3921309436060209825, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
 --- !u!212 &1789404909
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -690,7 +703,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7534814588082588449, guid: 823e8e10aff4fa44a9d59c2bc3a823fd,
+  m_Sprite: {fileID: -8908505173890310732, guid: 823e8e10aff4fa44a9d59c2bc3a823fd,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -729,3 +742,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  rollCooldownDuration: 1
