@@ -1,37 +1,60 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class MoveCharacter : MonoBehaviour {
+[RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
+public class MoveCharacter : MonoBehaviour
+{
+    private const string ROLL = "roll";
+
     [Tooltip("Speed in Unit per second")]
     public float speed = 5f;
 
-    void Start() {
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
+    // COOLDOWNS
+    [Tooltip("Cooldown of a roll in seconds")]
+    public float rollCooldownDuration = 1;
+    private float rollCooldown = 0;
+
+    void Start()
+    {
         this.transform.position = new Vector3(2, 2, 0);
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        Time.timeScale = 0.5f;
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         Vector3 move = Vector3.zero;
-        if (Input.GetKey(KeyCode.UpArrow)) {
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
             move += Vector3.up;
-        }        
-        if (Input.GetKey(KeyCode.DownArrow)) {
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
             move += Vector3.down;
-        }      
-        if (Input.GetKey(KeyCode.LeftArrow)) {
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
             move += Vector3.left;
-            GetComponent<SpriteRenderer>().flipX = true;
-        }      
-        if (Input.GetKey(KeyCode.RightArrow)) {
+            spriteRenderer.flipX = true;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
             move += Vector3.right;
-            GetComponent<SpriteRenderer>().flipX = false;
+            spriteRenderer.flipX = false;
         }
+        if (Input.GetKeyDown(KeyCode.Space) && rollCooldown <= 0)
+        {
+            animator.SetTrigger(ROLL);
+            rollCooldown = rollCooldownDuration;
+        }
+        animator.SetFloat("speed", move.magnitude);
 
-        this.transform.position = this.transform.position +  speed * Time.deltaTime * move.normalized;
-        GetComponent<Animator>().SetFloat("speed", move.magnitude);
-        if (Input.GetKey(KeyCode.Space)) {
-            GetComponent<Animator>().SetTrigger("roll");
-        }
+        this.transform.position = this.transform.position + speed * Time.deltaTime * move.normalized;
+        rollCooldown -= Time.deltaTime;
     }
 }
