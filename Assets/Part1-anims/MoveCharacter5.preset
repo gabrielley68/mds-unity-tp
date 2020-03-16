@@ -29,3 +29,7 @@ Preset:
     propertyPath: speed
     value: 5
     objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: rollCooldownDuration
+    value: 1
+    objectReference: {fileID: 0}

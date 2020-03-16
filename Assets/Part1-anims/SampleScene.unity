@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c45ace9547cdf458c579683f6195b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 25
+  animationSpeed: 12
   iddle:
   - {fileID: -7534814588082588449, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}
   - {fileID: -8908505173890310732, guid: 823e8e10aff4fa44a9d59c2bc3a823fd, type: 3}

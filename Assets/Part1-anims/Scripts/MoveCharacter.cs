@@ -22,7 +22,6 @@ public class MoveCharacter : MonoBehaviour
         this.transform.position = new Vector3(2, 2, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<SpritesheetAnimator>();
-        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
