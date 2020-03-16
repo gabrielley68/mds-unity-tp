@@ -61,7 +61,9 @@ namespace Part2
             {
                 AnimateNextFrame();
             }
-
+            
+            // in case the animation speed is very slow then accelerated
+            if (animationFrameDuration < nextFrameCoolDown) nextFrameCoolDown = animationFrameDuration;
             nextFrameCoolDown -= Time.deltaTime;
         }
 
