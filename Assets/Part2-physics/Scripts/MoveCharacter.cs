@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Part2
 {
-    [RequireComponent(typeof(SpriteRenderer), typeof(SpritesheetAnimator), typeof(Rigidbody2D))]
+    [RequireComponent(typeof(SpriteRenderer), typeof(SpritesheetAnimator))]
     public class MoveCharacter : MonoBehaviour
     {
         private const string ROLL = "roll";
@@ -12,7 +12,6 @@ namespace Part2
 
         private SpriteRenderer spriteRenderer;
         private SpritesheetAnimator animator;
-        private Rigidbody2D body;
 
         // COOLDOWNS
         [Tooltip("Cooldown of a roll in seconds")]
@@ -24,33 +23,31 @@ namespace Part2
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<SpritesheetAnimator>();
-            body = GetComponent<Rigidbody2D>();
-            body.position = new Vector3(2, 2, 0);
         }
 
         // Update is called once per frame
         void Update()
         {
-            body.velocity = Vector2.zero;
+            Vector3 acceleration = Vector3.zero;
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                body.velocity += Vector2.up;
+                acceleration += Vector3.up;
             }
 
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                body.velocity += Vector2.down;
+                acceleration += Vector3.down;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                body.velocity += Vector2.left;
+                acceleration += Vector3.left;
                 spriteRenderer.flipX = true;
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                body.velocity += Vector2.right;
+                acceleration += Vector3.right;
                 spriteRenderer.flipX = false;
             }
 
@@ -62,7 +59,7 @@ namespace Part2
 
             if (animator.CurrentAnimation.name != Anims.Roll || animator.LoopCount >= 1)
             {
-                if (body.velocity.magnitude > 0)
+                if (acceleration.magnitude > 0)
                 {
                     animator.Play(Anims.Run);
                 }
@@ -72,7 +69,7 @@ namespace Part2
                 }
             }
     
-            body.velocity = speed * body.velocity.normalized;
+            transform.position += speed * acceleration.normalized * Time.deltaTime;
             rollCooldown -= Time.deltaTime;
         }
     }
