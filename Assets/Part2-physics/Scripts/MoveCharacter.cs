@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Part2
 {
-    [RequireComponent(typeof(SpriteRenderer), typeof(SpritesheetAnimator))]
+    [RequireComponent(typeof(SpriteRenderer), typeof(SpritesheetAnimator), typeof(Rigidbody2D))]
     public class MoveCharacter : MonoBehaviour
     {
         private const string ROLL = "roll";
@@ -12,6 +12,7 @@ namespace Part2
 
         private SpriteRenderer spriteRenderer;
         private SpritesheetAnimator animator;
+        private Rigidbody2D body;
 
         // COOLDOWNS
         [Tooltip("Cooldown of a roll in seconds")]
@@ -23,31 +24,32 @@ namespace Part2
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<SpritesheetAnimator>();
+            body = GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            Vector3 acceleration = Vector3.zero;
+            Vector2 vitesse = Vector2.zero;
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                acceleration += Vector3.up;
+                vitesse += Vector2.up;
             }
 
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                acceleration += Vector3.down;
+                vitesse += Vector2.down;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                acceleration += Vector3.left;
+                vitesse += Vector2.left;
                 spriteRenderer.flipX = true;
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                acceleration += Vector3.right;
+                vitesse += Vector2.right;
                 spriteRenderer.flipX = false;
             }
 
@@ -59,7 +61,7 @@ namespace Part2
 
             if (animator.CurrentAnimation.name != Anims.Roll || animator.LoopCount >= 1)
             {
-                if (acceleration.magnitude > 0)
+                if (vitesse.magnitude > 0)
                 {
                     animator.Play(Anims.Run);
                 }
@@ -69,7 +71,8 @@ namespace Part2
                 }
             }
     
-            transform.position += speed * acceleration.normalized * Time.deltaTime;
+            body.velocity = vitesse.normalized * speed;
+
             rollCooldown -= Time.deltaTime;
         }
     }
