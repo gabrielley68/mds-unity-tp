@@ -9,6 +9,7 @@ namespace Part2
 
         private Rigidbody2D body;
         private SpritesheetAnimator animator;
+        public ParticleSystem speed_particle;
 
         void Start()
         {
@@ -22,12 +23,17 @@ namespace Part2
             float amplitude = vitesse.magnitude;
             animator.animationSpeed = amplitude * animtionSpeedRatio;
             body.rotation = Mathf.Rad2Deg * Mathf.Atan2(vitesse.y, vitesse.x);
-        }
 
-        void OnCollisionEnter2D(Collision2D col)
-        {
-            transform.localScale *= 1.1f;
-            Debug.Log("hop !");
+            var emission = speed_particle.emission;
+            if (amplitude > 1)
+            {
+                speed_particle.Play();
+                emission.rateOverTime = amplitude * 3f;
+            } else
+            {
+                speed_particle.Stop();
+                emission.rateOverTime = 0;
+            }
         }
     }
 }
