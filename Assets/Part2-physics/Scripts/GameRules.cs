@@ -29,9 +29,12 @@ public class GameRules : MonoBehaviour
     public Team orange;
     public Team blue;
     public ParticleSystem ExplosionFX;
+    public AudioSource clap;
 
     private int orangeScore = 0;
     private int blueScore = 0;
+
+    private float slowMotionCountDown = 0;
 
     void Start()
     {
@@ -45,6 +48,18 @@ public class GameRules : MonoBehaviour
     void Destroy() {
         BallCollisionEmitter emitter = ball.gameObject.GetComponentInChildren<BallCollisionEmitter>();
         emitter.OnCollided -= BallCollided;
+    }
+
+    void Update()
+    {
+        if(slowMotionCountDown > 0)
+        {
+            slowMotionCountDown -= Time.deltaTime;
+            Time.timeScale = .5f;
+        } else
+        {
+            Time.timeScale = 1;
+        }
     }
 
     private void BallCollided(Collision2D collision)
@@ -68,6 +83,7 @@ public class GameRules : MonoBehaviour
     private void ActivateExplosionFX(Vector2 pos)
     {
         Instantiate(ExplosionFX, pos, Quaternion.identity);
+        clap.Play(0);
     }
 
     private void ResetPositions()
@@ -94,5 +110,10 @@ public class GameRules : MonoBehaviour
     {
         orange.score.text = orangeScore.ToString();
         blue.score.text = blueScore.ToString();
+    }
+
+    public void slowMotion()
+    {
+        slowMotionCountDown = 0.5f;
     }
 }

@@ -23,6 +23,7 @@ namespace Part2
         public float ShootStrength = 5f;
         public ParticleSystem ShootFX;
         public ParticleSystem DirtFX;
+        public AudioSource[] ShootSounds;
 
         // COOLDOWNS
         [Tooltip("Cooldown of a roll in seconds")]
@@ -88,15 +89,19 @@ namespace Part2
                 }
             }
 
-            body.velocity = vitesse.normalized * speed;
-
             rollCooldown -= Time.deltaTime;
+            body.velocity = vitesse.normalized * speed;
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (other.rigidbody.bodyType == RigidbodyType2D.Dynamic && animator.CurrentAnimation.name == Anims.Roll)
             {
+                foreach (AudioSource audio in ShootSounds)
+                {
+                    audio.Play(0);
+                }
+                GameObject.Find("Game").GetComponent<GameRules>().slowMotion();
                 other.rigidbody.AddForce(-other.GetContact(0).normal * ShootStrength, ForceMode2D.Impulse);
                 Instantiate(ShootFX, other.GetContact(0).point, Quaternion.identity);
             }

@@ -28,7 +28,7 @@ namespace Part2
             if (amplitude > 1)
             {
                 speed_particle.Play();
-                emission.rateOverTime = amplitude * 3f;
+                emission.rateOverTime = amplitude * 20f;
             } else
             {
                 speed_particle.Stop();
